@@ -117,18 +117,17 @@ function init() {
 
 
 
-
-
-
 	const texture = new THREE.VideoTexture( video );
 	texture.minFilter = THREE.NearestFilter;
 
-	const width = 640, height = 480;
+	const width = 1920, height = 1080;
 
 
-	const geometry = new THREE.BoxBufferGeometry( width, height, -10 );
+	const geometry = new THREE.BoxBufferGeometry( width, height, 1 );
 	const material = new THREE.MeshBasicMaterial( { map: texture } );
-	scene.add( new THREE.Mesh( geometry, material ) );
+	const mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set(0,-100,-1000)
+	scene.add( mesh );
 
 	// const nearClipping = 850, farClipping = 3000;
 
