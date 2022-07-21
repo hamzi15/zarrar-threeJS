@@ -79,8 +79,8 @@ function render() {
 
 	const time = performance.now() * 0.001;
 
-	camera.position.x += ( mouse.x - camera.position.x ) * 0.005;
-	camera.position.y += ( - mouse.y - camera.position.y ) * 0.005;
+	camera.position.x += ( mouse.x - camera.position.x ) * 0.0005;
+	camera.position.y += ( - mouse.y - camera.position.y ) * 0.0005;
 	camera.lookAt( center );
 
 	water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
