@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+
+import * as THREE from 'three';
+>>>>>>> Stashed changes
 
 			import * as THREE from 'three';
 
@@ -20,10 +25,17 @@
 
 			function init() {
 
+<<<<<<< Updated upstream
 				container = document.getElementById( 'container_1' );
+=======
+let material;
+let mouse, center;
+init();
+>>>>>>> Stashed changes
 
 				//
 
+<<<<<<< Updated upstream
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -33,6 +45,20 @@
 
 
 				mouse = new THREE.Vector3( 0, 0, 1 );
+=======
+	container = document.getElementById( 'container_1' );
+	renderer = createRenderer();
+	container.appendChild( renderer.domElement );
+
+	scene = createScene();
+	camera = createCamera();
+	water = createWater();
+	let screen = createScreen(scene, camera);
+
+
+	scene.add( water );
+	scene.add( screen.mesh );
+>>>>>>> Stashed changes
 
 				//
 
@@ -41,7 +67,13 @@
 				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.position.set( 0, 0, 500 );
 
+<<<<<<< Updated upstream
 				//
+=======
+	screen.mmi.update()
+	animate()
+}
+>>>>>>> Stashed changes
 
 				sun = new THREE.Vector3();
 
@@ -68,9 +100,16 @@
 				);
 				
 
+<<<<<<< Updated upstream
 				water.rotation.x = - Math.PI / 2;
 				water.position.set(0,-370,-0)
 				scene.add( water );
+=======
+function animate() {
+	requestAnimationFrame( animate );
+	// mmi.update()
+	render();
+>>>>>>> Stashed changes
 
 				// Skybox
 
