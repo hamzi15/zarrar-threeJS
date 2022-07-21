@@ -4,7 +4,7 @@ export function createScreen() {
     const texture = new THREE.VideoTexture( video );
 	texture.minFilter = THREE.NearestFilter;
 
-	const width = 160, height = 90;
+	const width = 320, height = 133;
 
 
 	const geometry = new THREE.BoxBufferGeometry( width, height, 1 );
