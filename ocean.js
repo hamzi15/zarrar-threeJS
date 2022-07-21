@@ -43,9 +43,12 @@ function init() {
 
 	//
 
-	sun = new THREE.Vector3();
+	sun = new THREE.Vector3();const near = 1;
+	const far = 2;
+	scene.background = new THREE.Color(  0x3d3d3d);
+	scene.fog = new THREE.FogExp2( 0x3d3d3d, 0.00041 );
 
-	// Water
+  
 
 	const waterGeometry = new THREE.PlaneGeometry( 10000, 10000 );
 
@@ -69,21 +72,12 @@ function init() {
 	
 
 	water.rotation.x = - Math.PI / 2;
-	water.position.set(0,-370,-0)
+	water.position.set(0,-400,-0)
 	scene.add( water );
 
 	// Skybox
 
-	const sky = new Sky();
-	sky.scale.setScalar( 10000 );
-	scene.add( sky );
-
-	const skyUniforms = sky.material.uniforms;
-
-	skyUniforms[ 'turbidity' ].value = 10;
-	skyUniforms[ 'rayleigh' ].value = 2;
-	skyUniforms[ 'mieCoefficient' ].value = 0.005;
-	skyUniforms[ 'mieDirectionalG' ].value = 0.8;
+	
 	const parameters = {
 		elevation:0,
 		azimuth: 100
@@ -127,6 +121,7 @@ function init() {
 	const material = new THREE.MeshBasicMaterial( { map: texture } );
 	const mesh = new THREE.Mesh( geometry, material );
 	mesh.position.set(0,-100,-1000)
+	
 	scene.add( mesh );
 
 	// const nearClipping = 850, farClipping = 3000;
