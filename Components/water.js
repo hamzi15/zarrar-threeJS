@@ -20,7 +20,7 @@ export function createWater() {
 	
 
 	water.rotation.x = - Math.PI / 2;
-	water.position.set(0,-400,-0)
+	water.position.set(0, -70 ,-0)
 
     return water;
 }
