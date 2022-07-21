@@ -12,6 +12,8 @@ import { createScene } from './Components/scene.js'
 import { createCamera } from './Components/camera.js'
 import { createScreen } from './Components/screen.js';
 import { createWater } from './Components/water.js';
+import { createLights } from './Components/lights.js';
+import { createCube } from './Components/cube.js';
 
 
 let container, stats;
@@ -34,9 +36,10 @@ function init() {
 	camera = createCamera();
 	water = createWater();
 	let screen = createScreen();
+	let light = createLights();
+	let cube = createCube();
 
-
-	scene.add( water );
+	scene.add( water , light, cube );
 	scene.add( screen );
 
 	mouse = new THREE.Vector3( 0, 0, 1 );
@@ -76,8 +79,8 @@ function render() {
 
 	const time = performance.now() * 0.001;
 
-	camera.position.x += ( mouse.x - camera.position.x ) * 0.02;
-	camera.position.y += ( - mouse.y - camera.position.y ) * 0.02;
+	camera.position.x += ( mouse.x - camera.position.x ) * 0.005;
+	camera.position.y += ( - mouse.y - camera.position.y ) * 0.005;
 	camera.lookAt( center );
 
 	water.material.uniforms[ 'time' ].value += 1.0 / 60.0;

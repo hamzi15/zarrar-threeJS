@@ -6,6 +6,9 @@ function main() {
 
   // create a new world
   const world = new World(container);
+  window.addEventListener( 'resize', world.onWindowResize );
+	document.addEventListener( 'mousemove', world.onDocumentMouseMove );
+
   world.animate();
   // draw the scene
   world.render();

@@ -10,6 +10,6 @@ export function createScreen() {
 	const geometry = new THREE.BoxBufferGeometry( width, height, 1 );
 	const material = new THREE.MeshBasicMaterial( { map: texture } );
 	const mesh = new THREE.Mesh( geometry, material );
-	mesh.position.set(0,0,-1500)
+	mesh.position.set(0,300,-1500)
     return mesh;
 }

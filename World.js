@@ -11,6 +11,7 @@ let scene;
 let camera;
 let renderer;
 let mouse, center;
+let water
 
 class World {
 	constructor(container) {
@@ -19,7 +20,7 @@ class World {
     	renderer = createRenderer();
     	container.appendChild(renderer.domElement);
     	// const light = createLights();
-		const water = createWater();
+		water = createWater();
 		const screen = createScreen();
 
     	scene.add(water, screen);
@@ -33,8 +34,6 @@ class World {
 
 		video.play();
 
-		window.addEventListener( 'resize', onWindowResize );
-		document.addEventListener( 'mousemove', onDocumentMouseMove );
 	}
 
 	onWindowResize() {
