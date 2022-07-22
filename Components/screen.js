@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import MouseMeshInteraction from '../node_modules/@danielblagy/three-mmi';
 import { createRenderer } from './Systems/renderer.js'
 
-export function createScreen(scene, camera) {
+export function createScreen() {
     const texture = new THREE.VideoTexture( video );
 	texture.minFilter = THREE.NearestFilter;
 
@@ -19,15 +18,12 @@ export function createScreen(scene, camera) {
     const mesh1 = new THREE.Mesh( geometry1, material1 );
 
     mesh.name = 'fire';
+    mesh1.name = 'fire1';
     mesh1.position.set(0, -600, 10);
-    // mesh.add(mesh1);
+    mesh.add(mesh1);
 
     console.log(mesh.name);
-    const mmi = new MouseMeshInteraction(scene, camera);
-    mmi.addHandler('fire', 'click', function(){
-        console.log('Works!');
-    });
+
     // createRenderer(mmi);
-    mmi.update();
-    return { mesh, mmi};
+    return mesh;
 }
