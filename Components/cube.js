@@ -18,7 +18,7 @@ function createCube() {
 
 	
     const geometry = new BoxBufferGeometry(50, 50, 0);
-    const material = new MeshBasicMaterial({opacity: 1, transparent: true,depthWrite:false,depthTest:true});
+    const material = new MeshBasicMaterial({opacity: 1, transparent: true,depthWrite:false,depthTest:true,fog:false});
     const cube = new Mesh(geometry, material);
     cube.position.set(-400, 0, -100);
   
