@@ -5,7 +5,8 @@ import {
     MeshStandardMaterial,
     MeshBasicMaterial,
     TextureLoader,
-    ShapeGeometry
+    ShapeGeometry,
+    AlphaFormat
   } from 'three';
   
 import {TextGeometry} from 'three/examples/jsm/geometries/TextGeometry.js'
@@ -16,10 +17,11 @@ function createCube() {
 
 
 	
-    const geometry = new BoxBufferGeometry(50, 50, 1);
-    const material = new MeshBasicMaterial({opacity: 1, transparent: true});
+    const geometry = new BoxBufferGeometry(50, 50, 0);
+    const material = new MeshBasicMaterial({opacity: 1, transparent: true,depthWrite:false,depthTest:true});
     const cube = new Mesh(geometry, material);
     cube.position.set(-400, 0, -100);
+  
     const text = createText();
     // cube.rotation.set(-0.5, -0.1, 0.8);
 

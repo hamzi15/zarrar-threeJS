@@ -45,6 +45,7 @@ function init() {
 	let cube = createCube();
 	var texture = new THREE.TextureLoader().load( 'icons8-instagram.svg' );
 	cube.material.map= texture
+	
 	let cube2= createCube();
 	cube2.position.y += 100;
 	var texture = new THREE.TextureLoader().load( 'icons8-instagram.svg' );
@@ -73,7 +74,7 @@ function init() {
 	center = new THREE.Vector3();
 	center.z = -1000;
 	scene.background = new THREE.Color( 0x5e0000 );
-    scene.fog = new THREE.FogExp2( 0x5e0000, 0.0004 );
+    scene.fog = new THREE.FogExp2( 0x5e0000, 0.0008 );
 
 	video.play();
     
