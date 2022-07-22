@@ -14,21 +14,20 @@ import { createScreen } from './Components/screen.js';
 import { createWater } from './Components/water.js';
 import { createLights } from './Components/lights.js';
 import { createCube } from './Components/cube.js';
+import { loadShips } from './Components/ships.js';
 import MouseMeshInteraction from './node_modules/@danielblagy/three-mmi';
-
-
 
 let container, stats;
 let camera, scene, renderer;
 let controls, water, sun, mesh,geometry;
 
-
 let material;
 let mouse, center;
-let mmi;
-init();
+let lightTrial;
+// let mmi;
+await init();
 
-function init() {
+async function init() {
 
 	container = document.getElementById( 'container_1' );
 	renderer = createRenderer();
@@ -41,14 +40,20 @@ function init() {
 	let light = createLights();
 	let cube = createCube();
 
+	// lightTrial = new THREE.PointLight('white', 1.7);
+	// lightTrial.position.set(0, 0, 10000);
+
+	// scene.add(lightTrial);
+
+	const { passenger, cruise, cargo } = await loadShips();
+	scene.add(passenger, cruise);
 	scene.add( water , light );
 	scene.add( screen );
 
-	mmi = new MouseMeshInteraction(scene, camera);
-    mmi.addHandler('fire1', 'click', function(){
-        console.log('Works!');
-    });
-
+	// const mmi = new MouseMeshInteraction(scene, camera);
+    // mmi.addHandler('fire1', 'click', function(){
+    //     console.log('Works!');
+    // });
 
 	mouse = new THREE.Vector3( 0, 0, 1 );
 	center = new THREE.Vector3();
@@ -80,7 +85,7 @@ function onDocumentMouseMove( event ) {
 
 function animate() {
 	requestAnimationFrame( animate );
-	mmi.update()
+	// mmi.update();
 	render();
 
 }
@@ -96,5 +101,4 @@ function render() {
 	water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
 
 	renderer.render( scene, camera );
-
 }

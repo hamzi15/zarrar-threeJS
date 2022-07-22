@@ -20,7 +20,7 @@ export function createScreen() {
     mesh.name = 'fire';
     mesh1.name = 'fire1';
     mesh1.position.set(0, -600, 10);
-    mesh.add(mesh1);
+    // mesh.add(mesh1);
 
     console.log(mesh.name);
 
