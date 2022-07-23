@@ -24,6 +24,7 @@ let controls, water, sun, mesh,geometry;
 let material;
 let mouse, center;
 let lightTrial;
+let boats;
 // let mmi;
 await init();
 
@@ -45,11 +46,12 @@ async function init() {
 
 	// scene.add(lightTrial);
 
-	const { passenger, cruise, cargo } = await loadShips();
-	scene.add(passenger, cruise);
+	boats = await loadShips();
+	scene.add(boats.passenger, boats.cruise);
+
 	scene.add( water , light );
 	scene.add( screen );
-
+	console.log(boats.passenger)
 	// const mmi = new MouseMeshInteraction(scene, camera);
     // mmi.addHandler('fire1', 'click', function(){
     //     console.log('Works!');
@@ -63,6 +65,12 @@ async function init() {
 
 	window.addEventListener( 'resize', onWindowResize );
 	document.addEventListener( 'mousemove', onDocumentMouseMove );
+	document.addEventListener( 'keydown', onDocumentKeyPress );
+	document.addEventListener( 'keyup', onDocumentKeyPress );
+	document.addEventListener( 'keyleft', onDocumentKeyPress );
+	document.addEventListener( 'keyright', onDocumentKeyPress );
+
+
 
 	animate()
 }
@@ -82,12 +90,38 @@ function onDocumentMouseMove( event ) {
 	
 }
 
+function onDocumentKeyPress( event ) {
+	if (event.keyCode == 38) {
+		moveBoat(boats.passenger, 2);
+	}
+	else if (event.keyCode == 40) {
+		moveBoat(boats.passenger, -2);
+	}
+	else if (event.keyCode == 37) {
+		moveBoat(boats.passenger, 0.114, true);
+	}
+	else if (event.keyCode == 39) {
+		moveBoat(boats.passenger, -0.114, true);
+	}
+}
 
 function animate() {
 	requestAnimationFrame( animate );
 	// mmi.update();
 	render();
 
+}
+
+function moveBoat(boat, i, r = false) {
+	if (boat.position.x < 2300) {
+		boat.position.x += i;
+	}
+	if (r) {
+		boat.rotation.z += i;
+	}
+	// else if (boat.name == 'cruise' && boat.position.x > -2300) {
+	// 	boat.position.x -= 1;
+	// }
 }
 
 function render() {
@@ -99,6 +133,7 @@ function render() {
 	camera.lookAt( center );
 
 	water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
-
+	// moveBoat(boats.passenger);
+	// moveBoat(boats.cruise);
 	renderer.render( scene, camera );
 }

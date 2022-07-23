@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export function createLights(){
 
-    let light = new THREE.DirectionalLight( 'red', 1 );
+    let light = new THREE.DirectionalLight( 'sun', 1 );
     light.position.set( 0, 0, 1 );
     light.castShadow = true;
     light.shadow.camera.left = -1;

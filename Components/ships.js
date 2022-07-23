@@ -10,26 +10,26 @@ async function loadShips() {
       loader.loadAsync('../Components/assets/cruise/scene.gltf'),
       loader.loadAsync('../Components/assets/cargo/scene.gltf'),
     ]);
-  
-    console.log('Squaaawk!', passengerData);
-  
+
     const passenger = setupModel(passengerData);
-    passenger.position.set(0, 0, 2.5);
     passenger.scale.set(0.15, 0.15, 0.15);
     passenger.fog = false;
-    passenger.position.set(0, -450, 0);
+    passenger.position.set(600, -440, -500);
+    passenger.rotation.z = Math.PI / 2;
+    passenger.name = 'passenger';
   
     const cruise = setupModel(cruiseData);
-    cruise.position.set(7.5, 0, -10);
-    cruise.scale.set(0.015, 0.015, 0.015);
+    cruise.scale.set(0.025, 0.025, 0.025);
     cruise.fog = false;
-    cruise.position.set(0, -450, 0);
+    cruise.position.set(-100, -450, -800);
+    cruise.rotation.z = Math.PI / 2;
+    cruise.name = 'cruise';
+
 
     const cargo = setupModel(cargoData);
-    cargo.position.set(0, -2.5, -10);
     cargo.scale.set(0.5, 0.5, 0.5);
     cargo.fog = false;
-    cargo.position.set(0, -450, 0);
+    cargo.position.set(0, -450,-1000);
 
     return {
       passenger,

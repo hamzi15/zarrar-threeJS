@@ -9,7 +9,7 @@ export function createScreen() {
 
 
 	const geometry = new THREE.BoxBufferGeometry( width, height, 1 );
-	const material = new THREE.MeshBasicMaterial( { map: texture } );
+	const material = new THREE.MeshBasicMaterial( { map: texture, fog: false } );
 	const mesh = new THREE.Mesh( geometry, material );
 	mesh.position.set(0,200,-1500)
 
@@ -22,8 +22,5 @@ export function createScreen() {
     mesh1.position.set(0, -600, 10);
     // mesh.add(mesh1);
 
-    console.log(mesh.name);
-
-    // createRenderer(mmi);
     return mesh;
 }
