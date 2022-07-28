@@ -1,139 +1,131 @@
 
-		
 			import * as THREE from 'three';
-
-			import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
-
-
-	
-
-			let scene, camera, renderer;
-			let geometry, mesh, material;
-			let mouse, center;
+			import {TextGeometry} from 'three/examples/jsm/geometries/TextGeometry.js';
+			import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+			let camera, scene, renderer;
+			let textMesh1;
+			const AMOUNT = 6;
 
 			init();
 			animate();
 
 			function init() {
 
-				const container = document.createElement( 'div' );
-				document.body.appendChild( container );
+				const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 
-				const info = document.createElement( 'div' );
-				info.id = 'info';
-				info.innerHTML = '<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - kinect';
-				document.body.appendChild( info );
+				const WIDTH = ( window.innerWidth / AMOUNT ) * window.devicePixelRatio;
+				const HEIGHT = ( window.innerHeight / AMOUNT ) * window.devicePixelRatio;
 
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.set( 0, 0, 500 );
+				const cameras = [];
 
-				scene = new THREE.Scene();
-				center = new THREE.Vector3();
-				center.z = - 1000;
+				for ( let y = 0; y < AMOUNT; y ++ ) {
 
-				const video = document.getElementById( 'video' );
+					for ( let x = 0; x < AMOUNT; x ++ ) {
 
-				const texture = new THREE.VideoTexture( video );
-				texture.minFilter = THREE.NearestFilter;
+						const subcamera = new THREE.PerspectiveCamera( 40, ASPECT_RATIO, 0.1, 10 );
+						subcamera.viewport = new THREE.Vector4( Math.floor( x * WIDTH ), Math.floor( y * HEIGHT ), Math.ceil( WIDTH ), Math.ceil( HEIGHT ) );
+						subcamera.position.x = ( x / AMOUNT ) - 0.5;
+						subcamera.position.y = 0.5 - ( y / AMOUNT );
+						subcamera.position.z = 1.5;
+						subcamera.position.multiplyScalar( 2 );
+						subcamera.lookAt( 0, 0, 0 );
+						subcamera.updateMatrixWorld();
+						cameras.push( subcamera );
 
-				const width = 640, height = 480;
-				const nearClipping = 850, farClipping = 4000;
-
-				geometry = new THREE.BufferGeometry();
-
-				const vertices = new Float32Array( width * height * 3 );
-
-				for ( let i = 0, j = 0, l = vertices.length; i < l; i += 3, j ++ ) {
-
-					vertices[ i ] = j % width;
-					vertices[ i + 1 ] = Math.floor( j / width );
+					}
 
 				}
 
-				geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+				camera = new THREE.ArrayCamera( cameras );
+				camera.position.z = 3;
 
-				material = new THREE.ShaderMaterial( {
+				scene = new THREE.Scene();
 
-					uniforms: {
+				scene.add( new THREE.AmbientLight( 0x222244 ) );
 
-						'map': { value: texture },
-						'width': { value: width },
-						'height': { value: height },
-						'nearClipping': { value: nearClipping },
-						'farClipping': { value: farClipping },
+				const light = new THREE.DirectionalLight();
+				light.position.set( 0.5, 0.5, 1 );
+				light.castShadow = true;
+				light.shadow.camera.zoom = 4; // tighter shadow map
+				scene.add( light );
 
-						'pointSize': { value: 2 },
-						'zOffset': { value: 1000 }
+				const geometryBackground = new THREE.PlaneGeometry( 100, 100 );
+				const materialBackground = new THREE.MeshPhongMaterial( { color: 0x000066 } );
 
-					},
-					vertexShader: document.getElementById( 'vs' ).textContent,
-					fragmentShader: document.getElementById( 'fs' ).textContent,
-					blending: THREE.AdditiveBlending,
-					depthTest: false, depthWrite: false,
-					transparent: true
+				const background = new THREE.Mesh( geometryBackground, materialBackground );
+				background.receiveShadow = true;
+				background.position.set( 0, 0, - 1 );
+				scene.add( background );
 
-				} );
-
-				mesh = new THREE.Points( geometry, material );
-				scene.add( mesh );
-
-				const gui = new GUI();
-				gui.add( material.uniforms.nearClipping, 'value', 1, 10000, 1.0 ).name( 'nearClipping' );
-				gui.add( material.uniforms.farClipping, 'value', 1, 10000, 1.0 ).name( 'farClipping' );
-				gui.add( material.uniforms.pointSize, 'value', 1, 10, 1.0 ).name( 'pointSize' );
-				gui.add( material.uniforms.zOffset, 'value', 0, 4000, 1.0 ).name( 'zOffset' );
-
-				video.play();
-
-				//
+				const loader = new FontLoader();
+	loader.load('node_modules/three/examples/fonts/Headliner No. 45_Regular.json', function (font) {
+        const geometry = new TextGeometry('ZARRAR', {
+            font: font,
+        });
+        const materials = [
+            new THREE.MeshBasicMaterial({ color:"#5e0000" }), // front
+            new THREE.MeshBasicMaterial({ color: '#fc1c3d' }) // side
+        ];
+         textMesh1 = new THREE.Mesh(geometry, materials);
+        
+        
+  textMesh1.position.set(-10, -1, 0);
+		
+        scene.add(textMesh1)
+		
+    })
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				container.appendChild( renderer.domElement );
-
-				mouse = new THREE.Vector3( 0, 0, 1 );
-
-				document.addEventListener( 'mousemove', onDocumentMouseMove );
+				renderer.shadowMap.enabled = true;
+				document.body.appendChild( renderer.domElement );
 
 				//
-
+				
 				window.addEventListener( 'resize', onWindowResize );
 
 			}
 
 			function onWindowResize() {
 
-				camera.aspect = window.innerWidth / window.innerHeight;
+				const ASPECT_RATIO = window.innerWidth / window.innerHeight;
+				const WIDTH = ( window.innerWidth / AMOUNT ) * window.devicePixelRatio;
+				const HEIGHT = ( window.innerHeight / AMOUNT ) * window.devicePixelRatio;
+
+				camera.aspect = ASPECT_RATIO;
 				camera.updateProjectionMatrix();
+
+				for ( let y = 0; y < AMOUNT; y ++ ) {
+
+					for ( let x = 0; x < AMOUNT; x ++ ) {
+
+						const subcamera = camera.cameras[ AMOUNT * y + x ];
+
+						subcamera.viewport.set(
+							Math.floor( x * WIDTH ),
+							Math.floor( y * HEIGHT ),
+							Math.ceil( WIDTH ),
+							Math.ceil( HEIGHT ) );
+
+						subcamera.aspect = ASPECT_RATIO;
+						subcamera.updateProjectionMatrix();
+
+					}
+
+				}
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
 
-			function onDocumentMouseMove( event ) {
-
-				mouse.x = ( event.clientX - window.innerWidth / 2 ) * 8;
-				mouse.y = ( event.clientY - window.innerHeight / 2 ) * 8;
-
-			}
-
 			function animate() {
+
+				
+				renderer.render( scene, camera );
 
 				requestAnimationFrame( animate );
 
-				render();
-
 			}
-
-			function render() {
-
-				camera.position.x += ( mouse.x - camera.position.x ) * 0.05;
-				camera.position.y += ( - mouse.y - camera.position.y ) * 0.05;
-				camera.lookAt( center );
-
-				renderer.render( scene, camera );
-
-			}
-
-	
+		
+			

@@ -14,7 +14,7 @@ import {TextGeometry} from 'three/examples/jsm/geometries/TextGeometry.js';
 let container, stats;
 let camera, scene, renderer;
 let controls, water, sun, textMesh1,mesh,geometry,cube4,cube5,cube6,screen;
-
+let frame = 0;
 
 let material;
 let mouse, center;
@@ -36,7 +36,7 @@ function init() {
 	
 		 
 	
-	scene.add( water , light );
+	scene.add(  light );
 	
 	mouse = new THREE.Vector3( 0, 0, 1 );
 	center = new THREE.Vector3();
@@ -54,7 +54,8 @@ function init() {
             bevelOffset: -.2,
             bevelSegments: 2,
             bevelSize: .2,
-            bevelThickness: 8
+            bevelThickness: 8,
+			fog:true
         });
         const materials = [
             new THREE.MeshBasicMaterial({ color:"#5e0000" }), // front
@@ -63,8 +64,8 @@ function init() {
          textMesh1 = new THREE.Mesh(geometry, materials);
         textMesh1.castShadow = true
         
-        textMesh1.position.x -= 120
-		
+        textMesh1.position.x-=115
+		scene.fog = new THREE.FogExp2( 0x5e0000, 0.0005 );
         scene.add(textMesh1)
 		
     })
@@ -76,13 +77,13 @@ function init() {
 
 	window.addEventListener( 'resize', onWindowResize );
 	document.addEventListener( 'mousemove', onDocumentMouseMove );
-	document.addEventListener( 'click', playScreen );
+	
 
 }
 function playScreen(){
 	screen = createScreen();
-	scene.add( screen );
-	scene.fog = new THREE.FogExp2( 0x5e0000, 0.001 );
+	scene.add( water,screen );
+	
 	scene.background = new THREE.Color( 0x5e0000 );
 	video.play();
 	scene.remove(textMesh1);
@@ -117,9 +118,9 @@ function render() {
 
 	const time = performance.now() *8000;
 
-	camera.position.x = ( mouse.x-camera.position.x )*.08;
-	camera.position.y = ( - mouse.y -camera.position.y )*.08;
+	textMesh1.scale.z =( Math.cos(frame)/3  );
 	
+    frame += 0.5;
 	camera.lookAt( center );
 	
 	
