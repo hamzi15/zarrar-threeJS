@@ -44,7 +44,7 @@ function init() {
 	scene.background = new THREE.Color( 0x00000 );
     
 	const loader = new FontLoader();
-	loader.load('node_modules/three/examples/fonts/Headliner No. 45_Regular.json', function (font) {
+	loader.load('img/Headliner No. 45_Regular.json', function (font) {
         const geometry = new TextGeometry('ZARRAR', {
             font: font,
             size: 90,
