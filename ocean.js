@@ -64,7 +64,7 @@ function init() {
          textMesh1 = new THREE.Mesh(geometry, materials);
         textMesh1.castShadow = true
         
-        textMesh1.position.x-=115
+        textMesh1.position.x-=130
 		scene.fog = new THREE.FogExp2( 0x5e0000, 0.0005 );
         scene.add(textMesh1)
 		
