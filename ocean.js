@@ -15,7 +15,7 @@ let container, stats;
 let camera, scene, renderer;
 let controls, water, sun, textMesh1,mesh,geometry,cube4,cube5,cube6,screen;
 let frame = 0;
-
+let x=0;
 let material;
 let mouse, center;
 init();
@@ -77,17 +77,19 @@ function init() {
 
 	window.addEventListener( 'resize', onWindowResize );
 	document.addEventListener( 'mousemove', onDocumentMouseMove );
+	document.addEventListener('click',playScreen)
 	
 
 }
 function playScreen(){
 	screen = createScreen();
 	scene.add( water,screen );
-	
 	scene.background = new THREE.Color( 0x5e0000 );
 	video.play();
 	scene.remove(textMesh1);
     textMesh1.geometry.dispose();
+	x=1;
+	
     
 }
 
@@ -118,9 +120,15 @@ function render() {
 
 	const time = performance.now() *8000;
 
-	textMesh1.scale.z =( Math.cos(frame)/3  );
 	
-    frame += 0.5;
+	if (x===1){
+	camera.position.x += ( mouse.x - camera.position.x ) ;
+	camera.position.y += ( - mouse.y - camera.position.y ) ;
+	
+	}
+	else{textMesh1.scale.z =( Math.cos(frame)/3  );
+	
+    frame += 0.5;}
 	camera.lookAt( center );
 	
 	
