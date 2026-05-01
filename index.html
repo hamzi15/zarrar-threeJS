@@ -4,23 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hamza's Portfolio</title>
+    <title>ZARRAR</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="./style.css" >
   </head>
   <body style="margin:0px; overflow: hidden;">
+		<div id="container_1">
+		</div>
 
-    
-
-
-		<div id="container_1"></div>
-
-    <video id="video" loop muted crossOrigin="anonymous" playsinline style="display:none">
-		
+    	<video id="video" loop muted crossOrigin="anonymous" playsinline style="display:none">
 			<source src="./img/ZARRAR .mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
-    <script id="vs" type="x-shader/x-vertex">
+
+	
+
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+		<script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+		<script type="module" src="./ocean.js"></script>
+  </body>
+</html>
+
+  <!-- <script id="vs" type="x-shader/x-vertex">
 
 			uniform sampler2D map;
 
@@ -73,16 +80,4 @@
 
 			}
 
-		</script>
-
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
-
-
-
-		
-    <script type="module" src="/ocean.js"></script>
-  
-  </body>
-</html>
+		</script> -->
